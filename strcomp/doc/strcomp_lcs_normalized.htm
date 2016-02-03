@@ -1,0 +1,83 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			strcomp_lcs_normalized - Compute the similarity of two strings using the longest common substring
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "<A HREF="strcomp_h.htm">strcomp.h</A>"</CODE></PRE>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">float strcomp_lcs_normalized(const char *str1, const char *str2);</PRE>
+
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>strcomp_lcs()</i> function computes the longest common substring of two given strings and divides this value by the length of the longer string, normalizing the value to a range of [0..1].
+			<BR>
+			Character comparison in <i>strcomp_lcs_normalized()</i> ignores case.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;RETURN VALUE</H4>
+		
+		<BLOCKQUOTE>
+			A normalized value inidicating the percentage of <i>str1</i> and <i>str2</i> that are identical.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;ERRORS</H4>
+		
+		<BLOCKQUOTE>
+			In case of an error one of the following values will be returned:
+		</BLOCKQUOTE>
+		
+		<DL>
+			<DL>
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[STRCOMP_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The <i>str1</i> or <i>str2</i> arguments are NULL.
+					</DT>
+				</BLOCKQUOTE>
+			</DL>
+	
+		</DL>
+		
+	<H4>&nbsp;EXAMPLES</H4>
+	
+<DIV STYLE="margin-left: 0.39in; margin-bottom: 0.2in">
+<PRE>
+
+strcomp_lcs_normalized("Hello World", "World"); //Returns 0.4545
+
+</PRE>
+</DIV>
+
+	<HR SIZE=1 NOSHADE>
+	
+	<CENTER>
+		<BLOCKQUOTE>
+			Copyright © 2010 Aaron Clovsky
+		</BLOCKQUOTE>
+	</CENTER>
+	
+	</BODY>
+	
+</HTML>

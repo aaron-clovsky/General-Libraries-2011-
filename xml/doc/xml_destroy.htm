@@ -1,0 +1,72 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			xml_destroy - Free memory associated with an XML document
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "<A HREF="xml_h.htm">xml.h</A>"</CODE></PRE>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">void xml_destroy(xml *document);</PRE>
+		
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>xml_destroy()</i> function frees memory related to the <b>xml</b> structure pointed to by the <i>document</i> argument.
+			<br>
+			<i>xml_destroy()</i> should be called after an <b>xml</b> structure is initialized by a call to <A HREF="xml_create.htm">xml_create()</A>, <A HREF="xml_read.htm">xml_read()</A> or <A HREF="xml_import.htm">xml_import()</A>.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;RETURN VALUE</H4>
+		
+		<BLOCKQUOTE>
+			none
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;ERRORS</H4>
+		
+		<BLOCKQUOTE>
+			No errors are handled
+		</BLOCKQUOTE>
+		
+	<H4>&nbsp;EXAMPLES</H4>
+
+<DIV STYLE="margin-left: 0.39in; margin-bottom: 0.2in">
+<PRE>
+xml document;
+
+xml_create(&amp;document);
+
+xml_destroy(&amp;document);
+</PRE>
+</DIV>
+
+	<HR SIZE=1 NOSHADE>
+	
+	<CENTER>
+		<BLOCKQUOTE>
+			Copyright © 2010 Aaron Clovsky
+		</BLOCKQUOTE>
+	</CENTER>
+	
+	</BODY>
+</HTML>

@@ -1,0 +1,133 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			thread_semaphore_create - Initialize an unnamed semaphore
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "<A HREF="thread_h.htm">thread.h</A>"</CODE></PRE>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">int thread_semaphore_create(thread_semaphore *semaphore, unsigned int initial_value);</PRE>
+		
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>thread_semaphore_create()</i> function creates an unnamed semaphore with an initial value specified by the <i>initial_value</i> argument.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>semaphore</i> argument must point to an uninitialized <b>thread_semaphore</b> type variable.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>initial_value</i> argument must be an unsigned integer which will serve as the initial value of the semaphore.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The semaphore created by <i>thread_semaphore_create()</i> may be waited on/decremented with the <A HREF="thread_semaphore_wait.htm">thread_semaphore_wait()</A>, <A HREF="thread_semaphore_trywait.htm">thread_semaphore_trywait()</A> or <A HREF="thread_semaphore_timedwait.htm">thread_semaphore_timedwait()</A> functions.
+			<P>
+			The semaphore may be incremented with the <A HREF="thread_semaphore_post.htm">thread_semaphore_post()</A> function.
+			<P>
+			Once the semaphore is no longer in use the resources allocated by <i>thread_semaphore_create()</i> may be freed by calling <A HREF="thread_semaphore_destroy.htm">thread_semaphore_destroy()</A>.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>semaphore</i> argument must point to an uninitialized <b>thread_semaphore</b> type variable.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;RETURN VALUE</H4>
+		
+		<BLOCKQUOTE>
+			Upon successful completion the function returns zero.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;ERRORS</H4>
+		
+		<BLOCKQUOTE>
+			In case of an error one of the following values will be returned:
+		</BLOCKQUOTE>
+		
+		<DL>
+			<DL>
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[THREAD_ERROR_NULL_POINTER_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The <i>semaphore</i> argument is NULL.
+					</DT>
+				</BLOCKQUOTE>
+				
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[THREAD_ERROR_SYSTEM_CALL_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						A call to an operating system function failed.
+					</DT>
+				</BLOCKQUOTE>
+			</DL>
+	
+		</DL>
+		
+		<H4>&nbsp;EXAMPLES</H4>
+		
+<DIV STYLE="margin-left: 0.39in; margin-bottom: 0.2in">
+<PRE>
+thread_semaphore semaphore;
+
+void main(void)
+{
+	thread_handle handle[3];
+	
+	thread_semaphore_create(&semaphore, 2);
+	
+	printf("This program will complete in approximately two seconds\n");
+	
+	thread_create(thread, NULL, &amp;handle[0]);
+	thread_create(thread, NULL, &amp;handle[1]);
+	thread_create(thread, NULL, &amp;handle[2]);
+	
+	thread_join(handle[0], NULL);
+	thread_join(handle[1], NULL);
+	thread_join(handle[2], NULL);
+	
+	thread_semaphore_destroy(&semaphore);
+}
+
+void *thread(void *p)
+{
+	thread_semaphore_wait(&semaphore);
+	
+	thread_sleep(1000);
+	
+	thread_semaphore_post(&semaphore);
+}
+</PRE>
+</DIV>
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<CENTER>
+			<BLOCKQUOTE>
+				Copyright © 2010 Aaron Clovsky
+			</BLOCKQUOTE>
+		</CENTER>
+		
+	</BODY>
+</HTML>

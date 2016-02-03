@@ -1,0 +1,194 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			ipc_shm_create - Create a named shared memory region
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "<A HREF="ipc_h.htm">ipc.h</A>"</CODE></PRE>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">int ipc_shm_create(ipc_shm *shm, const char *name, unsigned int size, void **addr);</PRE>
+		
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>ipc_shm_create()</i> function creates a named shared memory region which any process on the system may access.
+			<i>ipc_shm_create()</i> will fail if another process has already created a shared memory region
+			 of the same name and that process is still running and has not called <A HREF="ipc_shm_destroy.htm">ipc_shm_destroy()</A>.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The shared memory region created by <i>ipc_shm_create()</i> may be opened by any process on the system using the <A HREF="ipc_shm_open.htm">ipc_shm_open()</A> function.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>ipc_shm_create()</i> and <A HREF="ipc_shm_open.htm">ipc_shm_open()</A> functions
+			work with names that exist within a unique namespace, other functions in <A HREF="ipc_h.htm">ipc.h</A> do not share this namespace.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>name</i> argument indicates the name of the shared memory region, it must point to a string consisting of alphanumeric characters and/or the special characters '-' and '_', other characters are illegal.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>size</i> argument is an unsigned integer indicating the size of the shared memory region.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>shm</i> argument is a pointer to an <b>ipc_shm</b> type variable, this variable is used to pass information to <A HREF="ipc_shm_destroy.htm">ipc_shm_destroy()</A>.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>addr</i> argument is a pointer to a void pointer which, upon successful completion of the function will contain the address of the shared memory reigon.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;RETURN VALUE</H4>
+		
+		<BLOCKQUOTE>
+			Upon successful completion the function returns zero.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;ERRORS</H4>
+		
+		<BLOCKQUOTE>
+			In case of an error one of the following values will be returned:
+		</BLOCKQUOTE>
+		
+		<DL>
+			<DL>
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[IPC_ERROR_NULL_POINTER_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The <i>name</i>, <i>addr</i> or <i>shm</i> arguments are NULL.
+					</DT>
+				</BLOCKQUOTE>
+				
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[IPC_ERROR_INITIALIZATION_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The <i>size</i> argument is zero.
+						<BR>or<BR>
+						The length of the string pointed to by <i>name</i> exceeeds IPC_NAME_MAX_LENGTH.
+						<BR>or<BR>
+						There is an illegal character present in the string pointed to by <i>name</i>.
+						<BR>or<BR>
+						An identically named shared memory region currently exists in a running process on the system.
+					</DT>
+				</BLOCKQUOTE>
+				
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[IPC_ERROR_MALLOC_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						A call to malloc() has failed due to insufficient memory.
+					</DT>
+				</BLOCKQUOTE>
+				
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[IPC_ERROR_SYSTEM_CALL_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						Shared memory region creation failed due to an operating system function error.
+					</DT>
+				</BLOCKQUOTE>
+			</DL>
+		</DL>
+		
+		<H4>&nbsp;EXAMPLES</H4>
+	
+<DIV STYLE="margin-left: 0.39in; margin-bottom: 0.2in">
+<PRE>
+/*Shared Memory Server*/
+int main(void)
+{
+	int      error;
+	ipc_shm  shm;
+	void    *mem;
+	
+	error = ipc_shm_create(&shm, "my_shm", 1024, &mem);
+	
+	if (error)
+	{
+		if (error == IPC_ERROR_INITIALIZATION_ERROR)
+		{
+			printf("Another shared memory server with this name currently exists!\n");
+		}
+		else
+		{
+			printf("An error occurred!\n");
+		}
+		
+		exit(0);
+	}
+	
+	//Write a string to the shared memory region
+	strcpy((char *)mem, "Hello World");
+	
+	//Wait until the user presses return to close the server
+	getchar();
+	
+	ipc_shm_destroy(&shm);
+	
+	return 0;
+}
+
+/*Shared Memory Client*/
+int main(void)
+{
+	int   error;
+	void *mem;
+	int   size;
+	
+	error = ipc_shm_open("my_shm", &mem, &size);
+	
+	if (error)
+	{
+		if (error == IPC_ERROR_INITIALIZATION_ERROR)
+		{
+			printf("A shared memory server with this name does not exist!\n");
+		}
+		else
+		{
+			printf("An error occurred!\n");
+		}
+		
+		exit(0);
+	}
+	
+	//Print the string stored in shared memory
+	printf("%s\n", (char *)mem);
+	
+	ipc_shm_close(mem);
+	
+	return 0;
+}
+</PRE>
+</DIV>
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<CENTER>
+			<BLOCKQUOTE>
+				Copyright © 2010 Aaron Clovsky
+			</BLOCKQUOTE>
+		</CENTER>
+		
+	</BODY>
+</HTML>

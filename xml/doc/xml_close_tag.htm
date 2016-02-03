@@ -1,0 +1,107 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			xml_close_tag - Close an XML tag
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "<A HREF="xml_h.htm">xml.h</A>"</CODE></PRE>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">int xml_close_tag(xml *document, const char *tag);</PRE>
+
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>xml_close_tag()</i> function closes a tag for an XML element (ie &lt;/tag&gt;).
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>document</i> argument specifies the xml document to append the close tag to.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>tag</i> argument specifies the tag name to use.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;RETURN VALUE</H4>
+		
+		<BLOCKQUOTE>
+			Upon successful completion the function returns zero.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;ERRORS</H4>
+		
+		<BLOCKQUOTE>
+			In case of an error one of the following values will be returned:
+		</BLOCKQUOTE>
+		
+		<DL>
+			<DL>
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[XML_ERROR_NULL_POINTER_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The <i>document</i> or <i>tag</i> arguments are NULL.
+					</DT>
+				</BLOCKQUOTE>
+				
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[XML_ERROR_INITIALIZATION_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The <b>xml</b> structure has not been initalized with the
+						<A HREF="xml_create.htm">xml_create()</A>, <A HREF="xml_read.htm">xml_read()</A> or <A HREF="xml_import.htm">xml_import()</A> functions.
+					</DT>
+				</BLOCKQUOTE>
+				
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[XML_ERROR_FILE_IO_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						An error occured in a call to fopen() or fwrite().
+					</DT>
+				</BLOCKQUOTE>
+			</DL>
+	
+		</DL>
+		
+		<H4>&nbsp;EXAMPLES</H4>
+		
+<DIV STYLE="margin-left: 0.39in; margin-bottom: 0.2in">
+<PRE>
+xml document;
+
+xml_create(&amp;document);
+
+xml_open_tag(&amp;document, "tag&amp;attributeOne&amp;attributeTwo", "value", "another value");
+
+xml_close_tag(&amp;document, "tag");
+</PRE>
+</DIV>
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<CENTER>
+			<BLOCKQUOTE>
+				Copyright © 2010 Aaron Clovsky
+			</BLOCKQUOTE>
+		</CENTER>
+		
+	</BODY>
+</HTML>

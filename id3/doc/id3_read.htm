@@ -1,0 +1,171 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			id3_read - Read the contents of an ID3 tag from an mp3 file
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "<A HREF="id3_h.htm">id3.h</A>"</CODE></PRE>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">int id3_read(const char *file_name, id3 *info, int flags);</PRE>
+		
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>id3_read()</i> function reads the contents of an ID3 tag embedded in an mp3 file.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>file_name</i> argument indicates the name of the mp3 file to be read.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>info</i> argument specifies the address of an <b>id3</b> structure to store the tag information in.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>flags</i> argument allows extended options to be set regarding the parsing of the ID3 tag.
+			<P>
+			This following flags are defined:
+		</BLOCKQUOTE>
+<PRE STYLE="margin-left: 0.39in; margin-right: 0.39in">
+	ID3_ONLY_READ_V1  - Read Only ID3 version 1.0 and 1.1 tags, ignore other versions
+	ID3_ONLY_READ_V2  - Read only ID3 version 2.3 and 2.4 tags, ignore other versions (negates ID3_ONLY_READ_V1)
+	ID3_ACQUIRE_IMAGE - Attempt to acquire an embedded image from the id3 tag. (negates ID3_ONLY_READ_V1)
+</PRE>
+		
+		<BLOCKQUOTE>
+			Notes:
+			<BR>
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The artist, album, title, year and track elements of the <b>id3</b> structure are strings corresponding to the eponymous ID3 data.
+			<BR>
+			If year or track data is not present in the tag then the correspong track or year element of the <b>id3</b> structure will be NULL.
+			<BR>
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			If ID3_ACQUIRE_IMAGE is not specified then the image element of the <b>id3</b> structure will always be NULL.
+			<BR>
+			If ID3_ACQUIRE_IMAGE is specified and an image is found in the ID3 tag the image element of the <b>id3</b> structure will be non-null and will point to the image file's location in memory,
+			<BR>
+			the image_type element will be non-zero if the image is in the PNG format and zero if the image is in the JPEG format,
+			<BR>
+			the image_size element will indicate the size of image file pointed to by the image element.
+			<BR>
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			If the tag read has text encoded in ISO8859-1 then the encoding element of the <b>id3</b> structure will have a value of ID3_ENCODING_ISO88591,
+			<BR>
+			if the text is encoded in UTF-8 then the encoding element will have a value of ID3_ENCODING_UTF8,
+			<BR>
+			other encoding is not currently supported and may cause <i>id3_read()</i> to return ID3_ERROR_NO_TAG,
+			<BR>
+			to support future versions of the library it is recommend that this element be checked before using text data returned from <i>id3_read()</i>.
+			<BR>
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The version of the embedded tag from which the data returned was obtained is available in the version element of the <b>id3</b> structure.
+			<BR>
+			This value will be either 1 for version 1.0 or 1.1 or 2 for version 2.3 or 2.4.
+			<BR>
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;RETURN VALUE</H4>
+		
+		<BLOCKQUOTE>
+			Upon successful completion the function returns zero.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;ERRORS</H4>
+		
+		<BLOCKQUOTE>
+			In case of an error one of the following values will be returned:
+		</BLOCKQUOTE>
+		
+		<DL>
+			<DL>
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[ID3_ERROR_NULL_POINTER_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The <i>file_name</i> or <i>info</i> arguments are NULL.
+					</DT>
+					
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[ID3_ERROR_MALLOC_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						A call to malloc() has failed due to insufficient memory.
+					</DT>
+					
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[ID3_ERROR_CANNOT_OPEN_FILE]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The file indicated by <i>file_name</i> cannot be opened.
+					</DT>
+					
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[ID3_ERROR_NO_TAG]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						Either no tag was found or the version or encoding of the tag was unsupported.
+					</DT>
+					
+					
+				</BLOCKQUOTE>
+			</DL>
+	
+		</DL>
+		
+		<H4>&nbsp;EXAMPLES</H4>
+		
+<DIV STYLE="margin-left: 0.39in; margin-bottom: 0.2in">
+<PRE>
+id3 tag;
+
+if (!id3_read("some_mp3.mp3", &amp;tag, ID3_ACQUIRE_IMAGE))
+{
+	printf("mp3 title: %s\n", tag.title);
+	
+	if (tag.image)
+	{
+		printf("mp3 has an embedded image\n");
+	}
+	
+	id3_free(tag);
+}
+else
+{
+	printf("Error reading tag\n");
+}
+</PRE>
+</DIV>
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<CENTER>
+			<BLOCKQUOTE>
+				Copyright © 2010 Aaron Clovsky
+			</BLOCKQUOTE>
+		</CENTER>
+		
+	</BODY>
+</HTML>

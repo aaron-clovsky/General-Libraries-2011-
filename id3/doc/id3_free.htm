@@ -1,0 +1,79 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			id3_free - Free memory associated with an id3 tag
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "<A HREF="id3_h.htm">id3.h</A>"</CODE></PRE>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">void id3_free(id3 info);</PRE>
+		
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>id3_free()</i> function frees memory related to the <b>id3</b> structure pointed to by the <i>info</i> argument.
+			<br>
+			<i>id3_free()</i> should only be called after an <b>id3</b> structure has been initialized by a call to <A HREF="id3_read.htm">id3_read()</A>.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;RETURN VALUE</H4>
+		
+		<BLOCKQUOTE>
+			none
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;ERRORS</H4>
+		
+		<BLOCKQUOTE>
+			No errors are handled
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;EXAMPLES</H4>
+		
+<DIV STYLE="margin-left: 0.39in; margin-bottom: 0.2in">
+<PRE>
+id3 tag;
+
+if (!id3_read("some_mp3.mp3", &amp;tag, 0))
+{
+	printf("mp3 title: %s\n", tag.title);
+	
+	id3_free(tag);
+}
+else
+{
+	printf("Error reading tag\n");
+}
+</PRE>
+</DIV>
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<CENTER>
+			<BLOCKQUOTE>
+				Copyright © 2010 Aaron Clovsky
+			</BLOCKQUOTE>
+		</CENTER>
+		
+	</BODY>
+</HTML>

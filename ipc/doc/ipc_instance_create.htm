@@ -1,0 +1,151 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			ipc_instance_create - Create a unique named instance
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "<A HREF="ipc_h.htm">ipc.h</A>"</CODE></PRE>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">int ipc_instance_create(const char *name, ipc_instance *instance);</PRE>
+		
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>ipc_instance_create()</i> function creates a unique named instance.
+			This instance can only be created by a single running process in the system, 
+			<i>ipc_instance_create()</i> will fail if another process has already created 
+			an instance of the same name and that process is still running and has not called <A HREF="ipc_instance_destroy.htm">ipc_instance_destroy()</A>.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>ipc_instance_create()</i> and <A HREF="ipc_instance_check.htm">ipc_instance_check()</A> functions
+			work with names that exist within a unique namespace, other functions in <A HREF="ipc_h.htm">ipc.h</A> do not share this namespace.
+			<BR>
+			The purpose of these functions is to provide a simple, non-resource intensive way of guaranteeing that a process
+			has only one running instance, or to check if another process is currently running.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>name</i> argument indicates the name of the instance, it must point to a string consisting of alphanumeric characters and/or the special characters '-' and '_', other characters are illegal.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>instance</i> argument is a pointer to an <b>ipc_instance</b> type variable, this variable is used to pass information to <A HREF="ipc_instance_destroy.htm">ipc_instance_destroy()</A>.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The identifier created with <i>ipc_instance_create()</i> will remain valid until either the process has terminated or <A HREF="ipc_instance_destroy.htm">ipc_instance_destroy()</A> is called.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;RETURN VALUE</H4>
+		
+		<BLOCKQUOTE>
+			Upon successful completion the function returns zero.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;ERRORS</H4>
+		
+		<BLOCKQUOTE>
+			In case of an error one of the following values will be returned:
+		</BLOCKQUOTE>
+		
+		<DL>
+			<DL>
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[IPC_ERROR_NULL_POINTER_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The <i>name</i> or <i>instance</i> arguments are NULL.
+					</DT>
+				</BLOCKQUOTE>
+			
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[IPC_ERROR_INITIALIZATION_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The length of the string pointed to by <i>name</i> exceeeds IPC_NAME_MAX_LENGTH.
+						<BR>or<BR>
+						There is an illegal character present in the string pointed to by <i>name</i>.
+						<BR>or<BR>
+						An identically named instance currently belongs to a running process on the system.
+					</DT>
+				</BLOCKQUOTE>
+			
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[IPC_ERROR_MALLOC_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						A call to malloc() has failed due to insufficient memory.
+					</DT>
+				</BLOCKQUOTE>
+			
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[IPC_ERROR_SYSTEM_CALL_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						Instance creation failed due to an operating system function error.
+					</DT>
+				</BLOCKQUOTE>
+			</DL>
+		</DL>
+		
+		<H4>&nbsp;EXAMPLES</H4>
+	
+<DIV STYLE="margin-left: 0.39in; margin-bottom: 0.2in">
+<PRE>
+int main(void)
+{
+	int          error;
+	ipc_instance instance;
+	
+	error = ipc_instance_create("my_program", &instance);
+	
+	if (error)
+	{
+		if (error == IPC_ERROR_INITIALIZATION_ERROR)
+		{
+			printf("Another instance of this process is currently running!\n");
+		}
+		else
+		{
+			printf("An error occurred!\n");
+		}
+		
+		exit(0);
+	}
+	
+	//While code in main executes other instances of this program will fail to start
+	
+	ipc_instance_destroy(&instance);
+	
+	return 0;
+}
+</PRE>
+</DIV>
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<CENTER>
+			<BLOCKQUOTE>
+				Copyright © 2010 Aaron Clovsky
+			</BLOCKQUOTE>
+		</CENTER>
+		
+	</BODY>
+</HTML>

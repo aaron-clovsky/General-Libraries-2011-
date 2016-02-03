@@ -1,0 +1,135 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			thread_once_async - Execute a given function exactly once
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "<A HREF="thread_h.htm">thread.h</A>"</CODE></PRE>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">int thread_once(thread_once_control *control, void (*init)(void));</PRE>
+
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>thread_once_async()</i> function performs asynchronous one-time initialization. 
+			<BR>
+			Regardless of how many threads call <i>thread_once_async()</i> with the same <b>thread_once_control</b> parameter the function passed to <i>init</i> will be called exactly once.
+			<BR>
+			The function specified by <i>init</i> is NOT guaranteed to have completed when <i>thread_once_async()</i> returns.
+			
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>control</i> argument is used to determine if the initialization has been performed. It must be initialized to THREAD_ONCE_INITIALIZER before calling
+			<i>thread_once_async()</i>.
+			<P>
+			Note: <i>thread_once_async()</i> and <A HREF="thread_once.htm">thread_once()</A> may refer to same <b>thread_once_control</b> parameter and maintain their respective behaviors.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;RETURN VALUE</H4>
+		
+		<BLOCKQUOTE>
+			Upon successful completion the function returns zero.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;ERRORS</H4>
+		
+		<BLOCKQUOTE>
+			In case of an error one of the following values will be returned:
+		</BLOCKQUOTE>
+		
+		<DL>
+			<DL>
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[THREAD_ERROR_NULL_POINTER_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The <i>control</i> or <i>init</i> arguments are NULL.
+					</DT>
+				</BLOCKQUOTE>
+			
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[THREAD_ERROR_SYSTEM_CALL_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						A call to an operating system function failed.
+					</DT>
+				</BLOCKQUOTE>
+			</DL>
+	
+		</DL>
+		
+		<H4>&nbsp;EXAMPLES</H4>
+		
+<DIV STYLE="margin-left: 0.39in; margin-bottom: 0.2in">
+<PRE>
+int                 flag = 0;
+thread_once_control control = THREAD_ONCE_INITIALIZER;
+
+void main(void)
+{
+	int           i;
+	thread_handle handle[5];
+	
+	for (i = 0; i &lt; 5; i++)
+	{
+		thread_create(thread, NULL, &amp;handle[i]);
+	}
+	
+	for (i = 0; i &lt; 5; i++)
+	{
+		thread_join(handle[i], NULL);
+	}
+}
+
+void init(void)
+{
+	thread_sleep(1000);
+	
+	flag = 1;
+}
+
+void *thread(void *p)
+{
+	thread_once_async(&amp;control, init);
+	
+	if (flag)
+	{
+		printf("I ran init()\n");
+	}
+	else
+	{
+		printf("I skipped it\n");
+	}
+}
+</PRE>
+</DIV>
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<CENTER>
+			<BLOCKQUOTE>
+				Copyright © 2010 Aaron Clovsky
+			</BLOCKQUOTE>
+		</CENTER>
+		
+	</BODY>
+</HTML>

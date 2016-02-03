@@ -1,0 +1,69 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			ipc_shm_close - Close a shared memory region
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "<A HREF="ipc_h.htm">ipc.h</A>"</CODE></PRE>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">void ipc_shm_close(void *addr);</PRE>
+		
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>ipc_shm_close()</i> closes access to a named shared memory region opened by
+			<A HREF="ipc_shm_open.htm">ipc_shm_open()</A>.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>addr</i> argument is a void pointer which was returned by a previous call to <A HREF="ipc_shm_open.htm">ipc_shm_open()</A>.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;RETURN VALUE</H4>
+		
+		<BLOCKQUOTE>
+			None.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;ERRORS</H4>
+		
+		<BLOCKQUOTE>
+			No errors are handled.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;EXAMPLES</H4>
+		
+		<DIV STYLE="margin-left: 0.39in; margin-bottom: 0.2in">
+			See the documentation for <A HREF="ipc_shm_create.htm">ipc_shm_create()</A> for an example of <i>ipc_shm_close()</i>.
+		</DIV>
+
+	<HR SIZE=1 NOSHADE>
+	
+	<CENTER>
+		<BLOCKQUOTE>
+			Copyright © 2010 Aaron Clovsky
+		</BLOCKQUOTE>
+	</CENTER>
+	
+	</BODY>
+</HTML>

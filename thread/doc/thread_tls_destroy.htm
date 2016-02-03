@@ -1,0 +1,66 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			thread_tls_destroy - Free memory associated with a thread local pointer
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "<A HREF="thread_h.htm">thread.h</A>"</CODE></PRE>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">void thread_tls_destroy(thread_tls tls);</PRE>
+
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>thread_tls_destroy()</i> function frees memory associated with a thread local pointer.
+			<P>
+			The function has no effect if the address of the <b>thread_tls</b> variable specified by the <i>tls</i> argument was not previously initialized with a call to <A HREF="thread_tls_create.htm">thread_tls_create()</A>.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;RETURN VALUE</H4>
+		
+		<BLOCKQUOTE>
+			None.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;ERRORS</H4>
+		
+		<BLOCKQUOTE>
+			No errors are handled.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;EXAMPLES</H4>
+		
+		<DIV STYLE="margin-left: 0.39in; margin-bottom: 0.2in">
+			See the documentation for <A HREF="thread_tls_create.htm">thread_tls_create()</A> for an example of <i>thread_tls_destroy()</i>
+		</DIV>
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<CENTER>
+			<BLOCKQUOTE>
+				Copyright © 2010 Aaron Clovsky
+			</BLOCKQUOTE>
+		</CENTER>
+		
+	</BODY>
+</HTML>

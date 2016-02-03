@@ -1,0 +1,95 @@
+
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			thread_sleep - Suspend execution of the current thread for a given interval
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "<A HREF="thread_h.htm">thread.h</A>"</CODE></PRE>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">void thread_sleep(unsigned int milliseconds);</PRE>
+
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>thread_sleep()</i> function causes the current thread to suspend execution for at least <i>milliseconds</i> milliseconds.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;RETURN VALUE</H4>
+		
+		<BLOCKQUOTE>
+			None
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;ERRORS</H4>
+		
+		<BLOCKQUOTE>
+			No errors are handled.
+		</BLOCKQUOTE>
+
+		<H4>&nbsp;EXAMPLES</H4>
+	
+<DIV STYLE="margin-left: 0.39in; margin-bottom: 0.2in">
+<PRE>
+thread_mutex mutex = THREAD_MUTEX_INITIALIZER;
+
+void main(void)
+{
+	int           i;
+	thread_handle handle[5];
+	
+	printf("This program will complete in 5 seconds\n");
+	
+	for (i = 0; i &lt; 5; i++)
+	{
+		thread_create(thread, NULL, &amp;handle[i]);
+	}
+	
+	for (i = 0; i &lt; 5; i++)
+	{
+		thread_join(handle[i], NULL);
+	}
+}
+
+void *thread(void *p)
+{
+	thread_mutex_lock(&amp;mutex);
+	
+	thread_sleep(1000);
+	
+	thread_mutex_unlock(&amp;mutex);
+}
+
+</PRE>
+</DIV>
+
+		<HR SIZE=1 NOSHADE>
+		
+		<CENTER>
+			<BLOCKQUOTE>
+				Copyright © 2010 Aaron Clovsky
+			</BLOCKQUOTE>
+		</CENTER>
+	
+	</BODY>
+</HTML>

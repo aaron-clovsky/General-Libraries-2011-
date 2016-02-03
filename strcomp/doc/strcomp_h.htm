@@ -1,0 +1,88 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			strcomp.h - String comparison library
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "strcomp.h"</CODE></PRE>
+		
+		<H4>COMPATIBILITY</H4>
+		
+		<BLOCKQUOTE>ANSI C</BLOCKQUOTE>
+		
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>strcomp.h</i> header file provides string comparison functions.
+			<br>
+			The following functions are defined:
+		</BLOCKQUOTE>
+		
+<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">
+int   <A HREF="strcomp_lcs.htm">strcomp_lcs</A>(const char *str1, const char *str2);
+float <A HREF="strcomp_lcs_normalized.htm">strcomp_lcs_normalized</A>(const char *str1, const char *str2);
+int   <A HREF="strcomp_levensthein.htm">strcomp_levensthein</A>(const char *str1, const char *str2);
+float <A HREF="strcomp_levensthein_normalized.htm">strcomp_levensthein_normalized</A>(const char *str1, const char *str2);
+</PRE>
+
+		<H4>COMPILE TIME OPTIONS</H4>
+		
+		The following constants are used by this library and may be overridden at compile time:
+		
+		<DL>
+			<DL>
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[STRCOMP_FIXED_BUFFER]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						Default Value: <b>0</B>
+						<P>
+						Defining this value as non-zero causes functions normally requiring dynamic allocation 
+						<BR>
+						(such as strcomp_levensthein_*) to use pre-allocated memory, the size of this allocation is 
+						<BR>
+						defined by STRCOMP_FIXED_BUFFER. This may provide a sizeable performance increase when a 
+						<BR>
+						large number of comparisons must be performed. Should the required memory for the comparison 
+						<BR>
+						exceed STRCOMP_FIXED_BUFFER then the function will return STRCOMP_ERROR.
+						<BR>
+						When STRCOMP_FIXED_BUFFER is non-zero some functions will no longer be thread-safe.
+					</DT>
+				</BLOCKQUOTE>
+			</DL>
+		</DL>
+		
+		<H4>NOTES</H4>
+		
+		This library is thread safe when STRCOMP_FIXED_BUFFER is zero.
+		
+		<HR SIZE=1 NOSHADE>
+	
+		<CENTER>
+			<BLOCKQUOTE>
+				Copyright © 2010 Aaron Clovsky
+			</BLOCKQUOTE>
+		</CENTER>
+	
+	</BODY>
+</HTML>

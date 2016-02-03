@@ -1,0 +1,116 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			thread_create - Create a thread
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "<A HREF="thread_h.htm">thread.h</A>"</CODE></PRE>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">int thread_create(void *(*thread)(void *), void *argument, thread_handle *handle);</PRE>
+
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>thread_create()</i> function creates a thread from the function specified in the <i>thread</i> argument.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>thread</i> argument must refer to a function of the prototype: <PRE>void *function_name(void *)</PRE>
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>argument</i> argument will be passed to the function specified by <i>thread</i> upon execution.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>handle</i> argument is a <b>thread_handle</b> pointer which places a handle to the current thread for use with <A HREF="thread_join.htm">thread_join()</A> at the address indicated.
+			<BR>
+			If <i>handle</i> is NULL then no handle will be returned and a call to <A HREF="thread_join.htm">thread_join()</A> will not be possible for the thread, creating a thread in this way uses less system resources.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;RETURN VALUE</H4>
+		
+		<BLOCKQUOTE>
+			Upon successful completion the function returns zero.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;ERRORS</H4>
+		
+		<BLOCKQUOTE>
+			In case of an error one of the following values will be returned:
+		</BLOCKQUOTE>
+		
+		<DL>
+			<DL>
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[THREAD_ERROR_NULL_POINTER_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The <i>thread</i> argument is NULL.
+					</DT>
+					
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[THREAD_ERROR_MALLOC_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						WIN64 only: A call to malloc() has failed due to insufficient memory
+					</DT>
+					
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[THREAD_ERROR_SYSTEM_CALL_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						Thread creation failed on an operating system function error.
+					</DT>
+				</BLOCKQUOTE>
+			</DL>
+	
+		</DL>
+	
+		<H4>&nbsp;EXAMPLES</H4>
+	
+<DIV STYLE="margin-left: 0.39in; margin-bottom: 0.2in">
+<PRE>
+void main(void)
+{
+	thread_handle handle;
+	
+	thread_create(thread, NULL, &amp;handle);
+	
+	thread_join(handle, NULL);
+}
+
+void *thread(void *argument)
+{
+	printf("A thread printed this message\n");
+	
+	return NULL;
+}
+</PRE>
+</DIV>
+
+		<HR SIZE=1 NOSHADE>
+		
+		<CENTER>
+			<BLOCKQUOTE>
+				Copyright © 2010 Aaron Clovsky
+			</BLOCKQUOTE>
+		</CENTER>
+		
+	</BODY>
+</HTML>

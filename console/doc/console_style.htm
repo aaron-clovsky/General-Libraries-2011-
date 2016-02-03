@@ -1,0 +1,119 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			console_style - Change console text style
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "<A HREF="console_h.htm">console.h</A>"</CODE></PRE>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">void console_style(int style);</PRE>
+		
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>console_style()</i> function changes the style of text subsequently printed to the console.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>style</i> argument specifies the style to be applied. 
+			<BR>
+			This style is constructed from a binary combination of the following constants:
+			<P>
+			Foreground Colors
+		</BLOCKQUOTE>
+<PRE STYLE="margin-left: 0.39in; margin-right: 0.39in">
+	CONSOLE_FG_COLOR_BLACK
+	CONSOLE_FG_COLOR_RED
+	CONSOLE_FG_COLOR_GREEN
+	CONSOLE_FG_COLOR_YELLOW
+	CONSOLE_FG_COLOR_BLUE
+	CONSOLE_FG_COLOR_MAGENTA
+	CONSOLE_FG_COLOR_CYAN
+	CONSOLE_FG_COLOR_WHITE
+</PRE>
+		<BLOCKQUOTE>
+			Background Colors
+		</BLOCKQUOTE>
+<PRE STYLE="margin-left: 0.39in; margin-right: 0.39in">
+	CONSOLE_BG_COLOR_BLACK
+	CONSOLE_BG_COLOR_RED
+	CONSOLE_BG_COLOR_GREEN
+	CONSOLE_BG_COLOR_YELLOW
+	CONSOLE_BG_COLOR_BLUE
+	CONSOLE_BG_COLOR_MAGENTA
+	CONSOLE_BG_COLOR_CYAN
+	CONSOLE_BG_COLOR_WHITE
+</PRE>
+
+		<BLOCKQUOTE>
+			Text Styles
+		</BLOCKQUOTE>
+<PRE STYLE="margin-left: 0.39in; margin-right: 0.39in">
+	CONSOLE_STYLE_DEFAULT
+	CONSOLE_STYLE_BOLD
+</PRE>	
+
+		<BLOCKQUOTE>
+			Note: Console style will NOT return to default on process termination, call:<PRE>console_style(CONSOLE_STYLE_DEFAULT);</PRE> to restore the default style.
+		</BLOCKQUOTE>
+
+		<H4>&nbsp;RETURN VALUE</H4>
+		
+		<BLOCKQUOTE>
+			none
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;ERRORS</H4>
+		
+		<BLOCKQUOTE>
+			No errors are handled
+		</BLOCKQUOTE>
+		
+	<H4>&nbsp;EXAMPLES</H4>
+	
+<DIV STYLE="margin-left: 0.39in; margin-bottom: 0.2in">
+<PRE>
+printf("Normal\n");
+
+console_style(CONSOLE_COLOR_FG_BLACK | CONSOLE_COLOR_BG_WHITE);
+
+printf("Black on White\n");
+
+console_style(CONSOLE_COLOR_FG_GREEN | CONSOLE_COLOR_BG_BLACK | CONSOLE_STYLE_BOLD);
+
+printf("Bold Green on Black\n");
+
+console_style(CONSOLE_STYLE_DEFAULT);
+</PRE>
+</DIV>
+
+	<HR SIZE=1 NOSHADE>
+	
+	<CENTER>
+		<BLOCKQUOTE>
+			Copyright © 2010 Aaron Clovsky
+		</BLOCKQUOTE>
+	</CENTER>
+	
+	</BODY>
+</HTML>

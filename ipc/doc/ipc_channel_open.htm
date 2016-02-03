@@ -1,0 +1,124 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			ipc_channel_open - Open a connection to an existing inter-process commmunication channel
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "<A HREF="ipc_h.htm">ipc.h</A>"</CODE></PRE>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">int ipc_channel_open(const char *name, ipc_channel_client *channel, unsigned int *size);</PRE>
+		
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>ipc_channel_open()</i> function opens a connection to an inter-process communication (IPC) channel created by any process in the system
+			using <A HREF="ipc_channel_create.htm">ipc_channel_create()</A>.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The IPC channel opened by <i>ipc_channel_open()</i> functions as an IPC client, allowing the process
+			to send messages to an IPC server using the <A HREF="ipc_channel_send.htm">ipc_channel_send()</A> and <A HREF="ipc_channel_send_and_receive.htm">ipc_channel_send_and_receive()</A> functions.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>ipc_channel_open()</i> and <A HREF="ipc_channel_create.htm">ipc_channel_create()</A> functions
+			work with names that exist within a unique namespace, other functions in <A HREF="ipc_h.htm">ipc.h</A> do not share this namespace.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>name</i> argument indicates the name of the channel, it must point to a string consisting of alphanumeric characters and/or the special characters '-' and '_', other characters are illegal.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>channel</i> argument is a pointer to an <b>ipc_channel_client</b> type variable, 
+			this variable may be used in subsequent calls to <A HREF="ipc_channel_send.htm">ipc_channel_send()</A>, <A HREF="ipc_channel_send_and_receive.htm">ipc_channel_send_and_receive()</A> and <A HREF="ipc_channel_close.htm">ipc_channel_close()</A>.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>size</i> argument is a pointer to an unsigned integer, upon successful completion of the function the value at <i>size</i> will indicate the maximum size of data which may be transferred with a single call to  <A HREF="ipc_channel_send.htm">ipc_channel_send()</A>, <A HREF="ipc_channel_send_and_receive.htm">ipc_channel_send_and_receive()</A>.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;RETURN VALUE</H4>
+		
+		<BLOCKQUOTE>
+			Upon successful completion the function returns zero.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;ERRORS</H4>
+		
+		<BLOCKQUOTE>
+			In case of an error one of the following values will be returned:
+		</BLOCKQUOTE>
+		
+		<DL>
+			<DL>
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[IPC_ERROR_NULL_POINTER_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The <i>name</i>, <i>channel</i> or <i>size</i> arguments are NULL.
+					</DT>
+				</BLOCKQUOTE>
+				
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[IPC_ERROR_INITIALIZATION_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The length of the string pointed to by <i>name</i> exceeeds IPC_NAME_MAX_LENGTH.
+						<BR>or<BR>
+						There is an illegal character present in the string pointed to by <i>name</i>.
+						<BR>or<BR>
+						An IPC channel with this name does not exist.
+					</DT>
+				</BLOCKQUOTE>
+				
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[IPC_ERROR_MALLOC_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						A call to malloc() has failed due to insufficient memory.
+					</DT>
+				</BLOCKQUOTE>
+				
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[IPC_ERROR_SYSTEM_CALL_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The function has failed due to an operating system function error.
+					</DT>
+				</BLOCKQUOTE>
+			</DL>
+		</DL>
+		
+		<H4>&nbsp;EXAMPLES</H4>
+		
+		<DIV STYLE="margin-left: 0.39in; margin-bottom: 0.2in">
+			See the documentation for <A HREF="ipc_channel_create.htm">ipc_channel_create()</A> for an example of <i>ipc_channel_open()</i>.
+		</DIV>
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<CENTER>
+			<BLOCKQUOTE>
+				Copyright © 2010 Aaron Clovsky
+			</BLOCKQUOTE>
+		</CENTER>
+		
+	</BODY>
+</HTML>

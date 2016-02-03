@@ -1,0 +1,146 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			thread_tls_create - Create a thread local pointer
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "<A HREF="thread_h.htm">thread.h</A>"</CODE></PRE>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">void thread_tls_create(thread_tls *tls);</PRE>
+		
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>thread_tls_create()</i> function creates a thread local pointer.
+			<P>
+			The thread local pointer may be read/written with the <A HREF="thread_tls_read.htm">thread_tls_read()</A> and <A HREF="thread_tls_write.htm">thread_tls_write()</A> functions respectively.
+			<P>
+			Once the thread local pointer is no longer in use the resources allocated by <i>thread_tls_create()</i> may be freed by calling <A HREF="thread_tls_destroy.htm">thread_tls_destroy()</A>.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;RETURN VALUE</H4>
+		
+		<BLOCKQUOTE>
+			None.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;ERRORS</H4>
+		
+		<BLOCKQUOTE>
+			In case of an error one of the following values will be returned:
+		</BLOCKQUOTE>
+		
+		<DL>
+			<DL>
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[THREAD_ERROR_NULL_POINTER_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The <i>tls</i> argument is NULL.
+					</DT>
+				</BLOCKQUOTE>
+				
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[THREAD_ERROR_SYSTEM_CALL_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						A call to an operating system function failed.
+					</DT>
+				</BLOCKQUOTE>
+			</DL>
+	
+		</DL>
+		
+		<H4>&nbsp;EXAMPLES</H4>
+		
+<DIV STYLE="margin-left: 0.39in; margin-bottom: 0.2in">
+<PRE>
+thread_tls tls;
+
+void main(void)
+{
+	thread_handle handle[3];
+	
+	thread_tls_create(&tls);
+	
+	thread_create(thread, NULL, &handle[0]);
+	thread_create(thread, NULL, &handle[1]);
+	thread_create(thread, NULL, &handle[2]);
+	
+	thread_join(handle[0], NULL);
+	thread_join(handle[1], NULL);
+	thread_join(handle[2], NULL);
+	
+	thread_tls_destroy(tls);
+}
+
+void *thread(void *p)
+{
+	int i, *value;
+	
+	value = count(0);
+	
+	for (i = 0; i < 5; i++)
+	{
+		count(1);
+		
+		printf("Thread is counting, now at %d\n", *value);
+	}
+	
+	free(value);
+	
+	return NULL
+}
+
+int *count(int amount)
+{
+	int *value;
+	
+	if (!amount)
+	{
+		value = malloc(sizeof(int));
+		
+		*value = 0;
+		
+		thread_tls_write(tls, value);
+	}
+	else
+	{
+		thread_tls_read(tls, (void **)&value);
+		
+		*value += amount;
+	}
+	
+	return value;
+}
+</PRE>
+</DIV>
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<CENTER>
+			<BLOCKQUOTE>
+				Copyright © 2010 Aaron Clovsky
+			</BLOCKQUOTE>
+		</CENTER>
+		
+	</BODY>
+</HTML>

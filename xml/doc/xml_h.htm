@@ -1,0 +1,96 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			xml.h - XML authoring/parsing/editing library
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "xml.h"</CODE></PRE>
+		
+		<H4>COMPATIBILITY</H4>
+		
+		<BLOCKQUOTE>ANSI C</BLOCKQUOTE>
+		
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>xml.h</i> header file provides XML file creation, reading and editing functions.
+			<br>
+			This library is intended to be a lightweight XML solution and thus functions do not perform
+			<br>
+			complete XML document validation and do not provide a means to traverse XML as a node tree,
+			<br>
+			as such performance for large numbers of XML reads/writes will be sub-optimal.
+			<br>
+			This header defines the type <b>xml</b> to represent an XML document.
+		</BLOCKQUOTE>
+
+		<BLOCKQUOTE>
+			The following functions are defined:
+		</BLOCKQUOTE>
+		
+<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">
+int  <A HREF="xml_create.htm">xml_create</A>(xml *document);
+void <A HREF="xml_destroy.htm">xml_destroy</A>(xml *document);
+int  <A HREF="xml_read.htm">xml_read</A>(xml *document, const char *file_name);
+int  <A HREF="xml_write.htm">xml_write</A>(xml document, const char *file_name);
+int  <A HREF="xml_import.htm">xml_import</A>(xml *document, const char *data);
+int  <A HREF="xml_open_tag.htm">xml_open_tag</A>(xml *document, const char *tag, ...);
+int  <A HREF="xml_close_tag.htm">xml_close_tag</A>(xml *document, const char *tag);
+int  <A HREF="xml_tag.htm">xml_tag</A>(xml *document, const char *tag, const char *content, ...);
+int  <A HREF="xml_data_tag.htm">xml_data_tag</A>(xml *document, const char *tag, const char *content, ...);
+int  <A HREF="xml_parse.htm">xml_parse</A>(xml document, char *buffer, unsigned int size, const char *query, ...);
+int  <A HREF="xml_modify.htm">xml_modify</A>(xml *document, const char *value, const char *query, ...);
+</PRE>
+
+		<H4>COMPILE TIME OPTIONS</H4>
+		
+		The following symbols are used by this library and may be defined or overridden at compile time:
+		
+		<DL>
+			<DL>
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[XML_ALLOCATION_UNIT]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						Default Value: <b>1024</B>
+						<P>
+						This value determines the dynamic allocation granularity of memory allocated for xml documents.
+						As xml new documents become larger with calls to <A HREF="xml_open_tag.htm">xml_open_tag()</A>, 
+						<A HREF="xml_close_tag.htm">xml_close_tag()</A>, <A HREF="xml_tag.htm">xml_tag()</A> and 
+						<A HREF="xml_data_tag.htm">xml_data_tag()</A> more memory must be allocated for the document,
+						larger values of XML_ALLOCATION_UNIT require less allocation calls to the heap but more resident
+						memory
+					</DT>
+				</BLOCKQUOTE>
+			</DL>
+		</DL>
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<CENTER>
+			<BLOCKQUOTE>
+				Copyright © 2010 Aaron Clovsky
+			</BLOCKQUOTE>
+		</CENTER>
+		
+	</BODY>
+</HTML>

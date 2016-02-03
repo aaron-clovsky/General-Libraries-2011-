@@ -1,0 +1,80 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			ipc_channel_client_type - Determine the client type of an inter-process communication client
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "<A HREF="ipc_h.htm">ipc.h</A>"</CODE></PRE>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">int ipc_channel_client_type(ipc_channel_server_client client);</PRE>
+		
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>ipc_channel_client_type()</i> function determines the client type of an inter-process communication client.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>client</i> argument is an <b>ipc_channel_server_client</b> type variable the value of which was returned by a previous call to <A HREF="ipc_channel_receive.htm">ipc_channel_receive()</A>.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;RETURN VALUE</H4>
+		
+		<DL>
+			<DL>
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[IPC_CHANNEL_HALF_DUPLEX]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The client is a half-duplex client.
+					</DT>
+					
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[IPC_CHANNEL_FULL_DUPLEX]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The client is a full-duplex client.
+					</DT>
+				</BLOCKQUOTE>
+			</DL>
+		</DL>
+		
+		<H4>&nbsp;ERRORS</H4>
+		
+		<BLOCKQUOTE>
+			No errors are handled.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;EXAMPLES</H4>
+		
+		<DIV STYLE="margin-left: 0.39in; margin-bottom: 0.2in">
+			See the documentation for <A HREF="ipc_channel_create.htm">ipc_channel_create()</A> for an example of <i>ipc_channel_client_type()</i>.
+		</DIV>
+
+	<HR SIZE=1 NOSHADE>
+	
+	<CENTER>
+		<BLOCKQUOTE>
+			Copyright © 2010 Aaron Clovsky
+		</BLOCKQUOTE>
+	</CENTER>
+	
+	</BODY>
+</HTML>

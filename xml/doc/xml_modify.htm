@@ -1,0 +1,143 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			xml_modify - Modify the content of an XML tag or attribute.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "<A HREF="xml_h.htm">xml.h</A>"</CODE></PRE>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">int xml_modify(xml *document, const char *value, const char *query, ...);</PRE>
+		
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>xml_modify()</i> function modifies the content of a tag or attribute from the XML document present in an <b>xml</b> structure.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>document</i> argument specifies the <b>xml</b> structure to modify.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>value</i> argument specifies data to replace the current value of the tag or attribute with.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>query</i> argument specifies the XML tag contents or attribute to be read from the document.
+			<BR>
+			The format of the <i>query</i> argument is similar to the standard object and array syntax of C with the following exceptions:
+			<BR>
+			<DT STYLE="margin-left: 0.2in; margin-bottom: 0.2in">
+				- Object indices are left empty, each instance of empty indices implies an integer argument after the <i>query</i> argument. 
+				<BR>
+				  Up to 256 indices may be referenced by <i>query</i>.
+				<BR>
+				- Attributes are indicated by an ampersand at the end of the object reference followed by the name of the attribute to be read.
+			</DT>
+			See <A HREF="xml_parse.htm">xml_parse()</A> for examples of the <i>query</i> argument format.
+		</BLOCKQUOTE>
+
+		<BLOCKQUOTE>
+			Nonexistant tag names, attribute names or out of range indices will cause <i>xml_modify()</i> to fail with the XML_ERROR_TAG_NOT_FOUND error.
+			<p>
+			If a syntax error which would prevent further parsing is found in the XML document prior to finding the desired data <i>xml_modify()</i> will
+			fail with the XML_ERROR_SYNTAX_ERROR error.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;RETURN VALUE</H4>
+		
+		<BLOCKQUOTE>
+			Upon successful completion the function returns zero.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;ERRORS</H4>
+		
+		<BLOCKQUOTE>
+			In case of an error one of the following values will be returned:
+		</BLOCKQUOTE>
+		
+		<DL>
+			<DL>
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[XML_ERROR_NULL_POINTER_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The <i>document</i>, <i>value</i> or <i>query</i> arguments are NULL.
+					</DT>
+				</BLOCKQUOTE>
+				
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[XML_ERROR_INITIALIZATION_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The <b>xml</b> structure has not been initalized with the
+						<A HREF="xml_create.htm">xml_create()</A>, <A HREF="xml_read.htm">xml_read()</A> or <A HREF="xml_import.htm">xml_import()</A> functions
+						or the <i>query</i> argument is malformed.
+					</DT>
+				</BLOCKQUOTE>
+				
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[XML_ERROR_MALLOC_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						A call to malloc() has failed due to insufficient memory.
+					</DT>
+				</BLOCKQUOTE>
+				
+				<BLOCKQUOTE>				
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[XML_ERROR_SYNTAX_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						A syntax error was found when parsing the XML document.
+					</DT>
+				</BLOCKQUOTE>
+				
+				<BLOCKQUOTE>				
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[XML_ERROR_TAG_NOT_FOUND]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The tag or attribute indicated by the <i>query</i> argument was not found.
+					</DT>
+				</BLOCKQUOTE>
+			</DL>
+	
+		</DL>
+		
+		<H4>&nbsp;EXAMPLES</H4>
+		
+<DIV STYLE="margin-left: 0.39in; margin-bottom: 0.2in">
+<PRE>
+xml  document;
+char buffer[128];
+
+xml_read(&amp;document, "file.xml");
+	
+xml_modify(&amp;document, "new value", "tag.innertag[]", 1);
+</PRE>
+</DIV>
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<CENTER>
+			<BLOCKQUOTE>
+				Copyright © 2010 Aaron Clovsky
+			</BLOCKQUOTE>
+		</CENTER>
+		
+	</BODY>
+</HTML>

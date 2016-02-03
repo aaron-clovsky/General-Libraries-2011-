@@ -1,0 +1,101 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			xml_import - Copy a null terminated string into an <b>xml</b> structure
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "<A HREF="xml_h.htm">xml.h</A>"</CODE></PRE>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">int xml_import(xml *document, const char *data)</PRE>
+
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>xml_import()</i> function takes a null terminated string and creates an <b>xml</b> structure from it.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>document</i> argument specifies the <b>xml</b> structure to write to.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>data</i> argument is a null terminated string containing an XML document.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			<i>xml_import()</i> should not be called with a pointer to an <b>xml</b> structure that has already 
+			been initialized by a previous call to <i>xml_import()</i>, <A HREF="xml_read.htm">xml_read()</A> or <A HREF="xml_create.htm">xml_create()</A>.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;RETURN VALUE</H4>
+		
+		<BLOCKQUOTE>
+			Upon successful completion the function returns zero.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;ERRORS</H4>
+		
+		<BLOCKQUOTE>
+			In case of an error one of the following values will be returned:
+		</BLOCKQUOTE>
+		
+		<DL>
+			<DL>
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[XML_ERROR_NULL_POINTER_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The <i>document</i> or <i>data</i> arguments are NULL.
+					</DT>
+				</BLOCKQUOTE>
+				
+				<BLOCKQUOTE>				
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[XML_ERROR_MALLOC_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						A call to malloc() has failed due to insufficient memory.
+					</DT>
+				</BLOCKQUOTE>
+			</DL>
+	
+		</DL>
+		
+		<H4>&nbsp;EXAMPLES</H4>
+		
+<DIV STYLE="margin-left: 0.39in; margin-bottom: 0.2in">
+<PRE>
+xml   document;
+const char *my_xml = "&lt;tag&gt;I love XML&lt;/tag&gt;";
+
+xml_import(&amp;document, myXML);
+</PRE>
+</DIV>
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<CENTER>
+			<BLOCKQUOTE>
+				Copyright © 2010 Aaron Clovsky
+			</BLOCKQUOTE>
+		</CENTER>
+		
+	</BODY>
+</HTML>

@@ -1,0 +1,113 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			thread.h - WIN32/64 and POSIX compatible threading library
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "thread.h"</CODE></PRE>
+		
+		<H4>COMPATIBILITY</H4>
+		
+		<BLOCKQUOTE>WIN32 NT5, POSIX.2001</BLOCKQUOTE>
+		
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>thread.h</i> header file provides cross-platform thread-related functionality.
+			<br>
+			This library is intended to simplify and/or extend both WIN32 and POSIX APIs while providing duplicate functionality.
+			<br>
+			This library provides functions related to: thread creation, unnamed mutexes, unnamed semaphores, one time initialization, thread local storage and thread execution suspension
+			<br>
+			This header defines the following types: <b>thread_handle</b>, <b>thread_mutex</b>, <b>thread_semaphore</b> and <b>thread_once_control</b>.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The following functions are defined:
+		</BLOCKQUOTE>
+		
+<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">
+int  <A HREF="thread_create.htm">thread_create</A>(void *(*thread)(void *), void *argument, thread_handle *handle);
+int  <A HREF="thread_join.htm">thread_join</A>(thread_handle handle, void **return_value);
+int  <A HREF="thread_tls_create.htm">thread_tls_create</A>(thread_tls *tls);
+int  <A HREF="thread_tls_read.htm">thread_tls_read</A>(thread_tls tls, void **value);
+int  <A HREF="thread_tls_write.htm">thread_tls_write</A>(thread_tls tls, void *value);
+void <A HREF="thread_tls_destroy.htm">thread_tls_destroy</A>(thread_tls tls);
+int  <A HREF="thread_mutex_lock.htm">thread_mutex_lock</A>(thread_mutex *mutex);
+int  <A HREF="thread_mutex_trylock.htm">thread_mutex_trylock</A>(thread_mutex *mutex);
+int  <A HREF="thread_mutex_unlock.htm">thread_mutex_unlock</A>(thread_mutex *mutex);
+int  <A HREF="thread_semaphore_create.htm">thread_semaphore_create</A>(thread_semaphore *semaphore, unsigned int initial_value);
+int  <A HREF="thread_semaphore_wait.htm">thread_semaphore_wait</A>(thread_semaphore *semaphore);
+int  <A HREF="thread_semaphore_trywait.htm">thread_semaphore_trywait</A>(thread_semaphore *semaphore);
+int  <A HREF="thread_semaphore_timedwait.htm">thread_semaphore_timedwait</A>(thread_semaphore *semaphore, unsigned int milliseconds);
+int  <A HREF="thread_semaphore_post.htm">thread_semaphore_post</A>(thread_semaphore *semaphore);
+void <A HREF="thread_semaphore_destroy.htm">thread_semaphore_destroy</A>(thread_semaphore *semaphore);
+int  <A HREF="thread_once.htm">thread_once</A>(thread_once_control *control, void (*init)(void));
+int  <A HREF="thread_once_async.htm">thread_once_async</A>(thread_once_control *control, void (*init)(void));
+void <A HREF="thread_sleep.htm">thread_sleep</A>(unsigned int milliseconds);
+void <A HREF="thread_yield.htm">thread_yield</A>(void);
+int  <A HREF="thread_logical_cores.htm">thread_logical_cores</A>(void);
+</PRE>
+
+		<H4>COMPILE TIME OPTIONS</H4>
+		
+		The following symbols are used by this library and may be defined or overridden at compile time:
+		
+		<DL>
+			<DL>
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[THREAD_LOGICAL_CORES_X86]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						If this symbol is defined then the <A HREF="thread_logical_cores.htm">thread_logical_cores()</A> function will use 
+						an x86 instruction to determine the number of logical cores rather than an operating system specific function.
+					</DT>
+				</BLOCKQUOTE>
+			</DL>
+		</DL>
+		
+		<H4>NOTES</H4>
+		
+		<u>POSIX</u>
+		<BR>
+		This module must be linked to the real time library ('-lrt' compiler option) in order to compile.
+		<P>
+		The <A HREF="thread_logical_cores.htm">thread_logical_cores()</A> function is not supported by the POSIX API, thus the function
+		is implemented to support a wide range of operating systems (Linux/Solaris/AIX/FreeBSD/NetBSD/OpenBSD/MacOSX/HPUX/IRIX). 
+		If compiling for an x86 architecture (i586+) defining THREAD_LOGICAL_CORES_X86 may provide a faster and more portable implementation.
+		<P>
+		The thread_semaphore_* and <A HREF="thread_mutex_lock.htm">thread_mutex_lock()</A> functions do not handle the E_INTR errno value while waiting,
+		<BR>
+		if these functions are interrupted by a signal they will return THREAD_ERROR_SYSTEM_CALL_ERROR.
+		<P>
+		The <A HREF="thread_semaphore_timedwait.htm">thread_semaphore_timedwait()</A> function will only be available if 
+		the compiler reports _POSIX_C_SOURCE >= 200112L OR _XOPEN_SOURCE >= 600.
+		
+		<HR SIZE=1 NOSHADE>
+	
+		<CENTER>
+			<BLOCKQUOTE>
+				Copyright © 2010 Aaron Clovsky
+			</BLOCKQUOTE>
+		</CENTER>
+	</BODY>
+</HTML>

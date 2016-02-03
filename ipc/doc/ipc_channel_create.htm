@@ -1,0 +1,302 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			ipc_channel_create - Create an inter-process commmunication channel
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "<A HREF="ipc_h.htm">ipc.h</A>"</CODE></PRE>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">int ipc_channel_create(const char *name, unsigned int size, ipc_channel_server *channel);</PRE>
+		
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>ipc_channel_create()</i> function creates an inter-process communication (IPC) channel 
+			which a process may use to receive messages from other processes on the system.
+			<i>ipc_channel_create()</i> will fail if another process has already created 
+			a channel of the same name and that process is still running and has not called <A HREF="ipc_channel_destroy.htm">ipc_channel_destroy()</A>.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The IPC channel created by <i>ipc_channel_create()</i> functions as an IPC server, other processes that wish to communicate
+			with the server process may become a client by calling the <A HREF="ipc_channel_open.htm">ipc_channel_open()</A> function.
+			<BR>
+			Half and full duplex communication with the server is possible from the server side by using the <A HREF="ipc_channel_receive.htm">ipc_channel_receive()</A> and <A HREF="ipc_channel_respond.htm">ipc_channel_respond()</A> functions, 
+			
+			and from the client side by using the <A HREF="ipc_channel_send.htm">ipc_channel_send()</A> and <A HREF="ipc_channel_send_and_receive.htm">ipc_channel_send_and_receive()</A> functions. 
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>ipc_channel_create()</i> and <A HREF="ipc_channel_open.htm">ipc_channel_open()</A> functions
+			work with names that exist within a unique namespace, other functions in <A HREF="ipc_h.htm">ipc.h</A> do not share this namespace.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>name</i> argument indicates the name of the channel, it must point to a string consisting of alphanumeric characters and/or the special characters '-' and '_', other characters are illegal.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>size</i> argument is an unsigned integer indicating the maximum size of data which may be transferred with a single call to  <A HREF="ipc_channel_send.htm">ipc_channel_send()</A>, <A HREF="ipc_channel_send_and_receive.htm">ipc_channel_send_and_receive()</A> or <A HREF="ipc_channel_respond.htm">ipc_channel_respond()</A>.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>channel</i> argument is a pointer to an <b>ipc_channel_server</b> type variable, 
+			this variable may be used in subsequent calls to <A HREF="ipc_channel_receive.htm">ipc_channel_receive()</A>, <A HREF="ipc_channel_respond.htm">ipc_channel_respond()</A> and <A HREF="ipc_channel_destroy.htm">ipc_channel_destroy()</A>.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;RETURN VALUE</H4>
+		
+		<BLOCKQUOTE>
+			Upon successful completion the function returns zero.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;ERRORS</H4>
+		
+		<BLOCKQUOTE>
+			In case of an error one of the following values will be returned:
+		</BLOCKQUOTE>
+		
+		<DL>
+			<DL>
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[IPC_ERROR_NULL_POINTER_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The <i>name</i> or <i>channel</i> arguments are NULL.
+					</DT>
+				</BLOCKQUOTE>
+				
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[IPC_ERROR_INITIALIZATION_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The <i>size</i> argument is zero.
+						<BR>or<BR>
+						The length of the string pointed to by <i>name</i> exceeeds IPC_NAME_MAX_LENGTH.
+						<BR>or<BR>
+						There is an illegal character present in the string pointed to by <i>name</i>.
+						<BR>or<BR>
+						An identically named channel currently exists in a running process on the system.
+					</DT>
+				</BLOCKQUOTE>
+				
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[IPC_ERROR_MALLOC_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						A call to malloc() has failed due to insufficient memory.
+					</DT>
+				</BLOCKQUOTE>
+				
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[IPC_ERROR_SYSTEM_CALL_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						Channel creation failed due to an operating system function error.
+					</DT>
+				</BLOCKQUOTE>
+			</DL>
+		</DL>
+		
+		<H4>&nbsp;EXAMPLES</H4>
+	
+<DIV STYLE="margin-left: 0.39in; margin-bottom: 0.2in">
+<PRE>
+/*IPC Server*/
+int main(void)
+{
+	int                        error;
+	unsigned int               size;
+	char                       buffer[1024];
+	ipc_channel_server         channel;
+	ipc_channel_server_client  client;
+	
+	error = ipc_channel_create("my_channel", 1024, &channel);
+	
+	if (error)
+	{
+		if (error == IPC_ERROR_INITIALIZATION_ERROR)
+		{
+			printf("Another IPC server with this name currently exists!\n");
+		}
+		else
+		{
+			printf("An error occurred!\n");
+		}
+		
+		exit(0);
+	}
+	
+	//The server will print incoming data to the screen
+	while(1)
+	{
+		//Wait until a message is received
+		error = ipc_channel_receive(&channel, buffer, &size, &client);
+		
+		if (error)
+		{
+			printf("An error occurred receiving a message!\n");
+			
+			break;
+		}
+		
+		//When the string "exit" is received the process ends
+		if (!strcmp("exit", buffer))
+		{
+			printf("Received exit message, shutting down!\n");
+			
+			break;
+		}
+		else
+		{
+			printf("Received Message: \"%s\"\n", buffer);
+		}
+		
+		//If the client created a full-duplex connection, we echo the data back to the client
+		if (ipc_channel_client_type(client) == IPC_CHANNEL_FULL_DUPLEX)
+		{
+			error = ipc_channel_respond(&channel, client, buffer, size);
+			
+			if (error)
+			{
+				printf("An error occurred responding to a message!\n");
+			}
+		}
+	}
+	
+	ipc_channel_destroy(&channel);
+	
+	return 0;
+}
+
+/*Half Duplex IPC Client*/
+int main(int argc, char **argv)
+{
+	int                error;
+	unsigned int       size;
+	ipc_channel_client client;
+	
+	if (argc != 2)
+	{
+		printf("Incorrect arguments!\n");
+	}
+	
+	error = ipc_channel_open("my_channel", &channel, &size);
+	
+	if (error)
+	{
+		if (error == IPC_ERROR_INITIALIZATION_ERROR)
+		{
+			printf("An IPC server with this name does not exist!\n");
+		}
+		else
+		{
+			printf("An error occurred!\n");
+		}
+		
+		exit(0);
+	}
+	
+	if (strlen(argv[1]) + 1 > size)
+	{
+		printf("Message too long!\n");
+	}
+	else
+	{
+		error = ipc_channel_send(&channel, argv[1], strlen(argv[1]) + 1);
+		
+		if (error)
+		{
+			printf("An error occurred sending the message!\n");
+		}
+		else
+		{
+			printf("Message sent successfully!\n");
+		}
+	}
+	
+	ipc_channel_close(&channel);
+}
+
+/*Full Duplex IPC Client*/
+int main(int argc, char **argv)
+{
+	int                 error;
+	unsigned int        size;
+	char               *buffer;
+	ipc_channel_client  client;
+	
+	if (argc != 2)
+	{
+		printf("Incorrect arguments!\n");
+	}
+	
+	error = ipc_channel_open("my_channel", &channel, &size);
+	
+	if (error)
+	{
+		if (error == IPC_ERROR_INITIALIZATION_ERROR)
+		{
+			printf("An IPC server with this name does not exist!\n");
+		}
+		else
+		{
+			printf("An error occurred!\n");
+		}
+		
+		exit(0);
+	}
+	
+	if (strlen(argv[1]) + 1 > size)
+	{
+		printf("Message too long!\n");
+	}
+	else
+	{
+		buffer = (char *)malloc(size);
+		
+		error = ipc_channel_send_and_receive(&channel, argv[1], strlen(argv[1]) + 1, buffer, *size);
+		
+		if (error)
+		{
+			printf("An error occurred sending the message!\n");
+		}
+		else
+		{
+			printf("Received Response: \"%s\"\n", buffer);
+		}
+		
+		free(buffer);
+	}
+	
+	ipc_channel_close(&channel);
+}
+</PRE>
+</DIV>
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<CENTER>
+			<BLOCKQUOTE>
+				Copyright © 2010 Aaron Clovsky
+			</BLOCKQUOTE>
+		</CENTER>
+		
+	</BODY>
+</HTML>

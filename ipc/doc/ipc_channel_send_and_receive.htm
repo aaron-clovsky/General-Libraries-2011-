@@ -1,0 +1,135 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			ipc_channel_send_and_receive - Send a full-duplex message on an inter-process commmunication channel
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "<A HREF="ipc_h.htm">ipc.h</A>"</CODE></PRE>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">int ipc_channel_send_and_receive(ipc_channel_client *channel, void *out_data, unsigned int out_size, void *in_data, unsigned int *in_size);</PRE>
+		
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>ipc_channel_send_and_receive()</i> function sends a full-duplex message on an inter-process communication (IPC) channel. 
+			<i>ipc_channel_send_and_receive()</i> will block until a response has been received.	
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			<i>ipc_channel_send_receive()</i> may be called concurrently from multiple threads with the same <i>channel</i> argument.
+			This allows for multi-threaded IPC clients to be constructed. Use <A HREF="../../thread/doc/thread_h.htm">thread.h</A> for cross-platform multi-threading support.
+			<BR>
+			Note that each thread must use a different buffer for <i>in_data</i> or the data in the buffer will be unpredictable.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>channel</i> argument is a pointer to an <b>ipc_channel_client</b> type variable which has been initialized by a previous call to <A HREF="ipc_channel_open.htm">ipc_channel_open()</A>.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>out_data</i> argument is a pointer to a buffer in memory where the message to be sent is stored.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>out_size</i> argument is an unsigned integer indicating the size of the message in bytes to copy from <i>out_data</i>. This value must not exceed 
+			the maximum transmission size of the IPC channel as indicated by the <A HREF="ipc_channel_open.htm">ipc_channel_open()</A> function or the function will fail with IPC_ERROR_INITIALIZATION_ERROR.
+			<BR>
+			Note that it is possible for the size of a message to be zero, in this case no data is read from <i>out_data</i> and <i>out_data</i> may be NULL.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>in_data</i> argument is a pointer to a buffer in memory where the response may be stored, 
+			the size of this buffer should correspond to the maximum transmission size of the IPC channel as indicated by the <A HREF="ipc_channel_open.htm">ipc_channel_open()</A> function.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>in_size</i> argument is a pointer to an unsigned integer, upon successful completion of the function the value at <i>in_size</i> will indicate the size of the response in bytes which was copied to <i>in_data</i>.
+			<BR>
+			Note that it is possible for the size of a response to be zero, in this case no data is copied to <i>in_data</i>.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;RETURN VALUE</H4>
+		
+		<BLOCKQUOTE>
+			Upon successful completion the function returns zero.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;ERRORS</H4>
+		
+		<BLOCKQUOTE>
+			In case of an error one of the following values will be returned:
+		</BLOCKQUOTE>
+		
+		<DL>
+			<DL>
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[IPC_ERROR_NULL_POINTER_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The <i>channel</i>, <i>in_data</i> or <i>in_size</i> arguments are NULL.
+					</DT>
+				</BLOCKQUOTE>
+			
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[IPC_ERROR_INITIALIZATION_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The <i>out_size</i> argument is non-zero and the <i>out_data</i> argument is NULL.
+						<BR>
+						or
+						<BR>
+						The <i>out_size</i> argument exceeds the size of the channel.
+						<BR>
+						or
+						<BR>
+						The channel has not been opened or has been closed.
+						<BR>
+						or
+						<BR>
+						The channel no longer exists.
+					</DT>
+				</BLOCKQUOTE>
+			
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[IPC_ERROR_SYSTEM_CALL_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The function has failed due to an operating system function error.
+					</DT>
+				</BLOCKQUOTE>
+			</DL>
+		</DL>
+		
+		<H4>&nbsp;EXAMPLES</H4>
+		
+		<DIV STYLE="margin-left: 0.39in; margin-bottom: 0.2in">
+			See the documentation for <A HREF="ipc_channel_create.htm">ipc_channel_create()</A> for an example of <i>ipc_channel_send_and_receive()</i>.
+		</DIV>
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<CENTER>
+			<BLOCKQUOTE>
+				Copyright © 2010 Aaron Clovsky
+			</BLOCKQUOTE>
+		</CENTER>
+		
+	</BODY>
+</HTML>

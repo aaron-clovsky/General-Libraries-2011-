@@ -1,0 +1,75 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			id3.h - MP3 ID3 tag reading library
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "id3.h"</CODE></PRE>
+		
+		<H4>COMPATIBILITY</H4>
+		
+		<BLOCKQUOTE>ANSI C</BLOCKQUOTE>
+		
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>id3.h</i> header file provides ID3 tag reading and ID3 tag memory management functions.
+			<P>
+			This header defines the type <b>id3</b> with the following definition:
+		</BLOCKQUOTE>
+		
+<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">
+typedef struct 
+{
+ 	char *artist;
+	char *album;
+	char *title;
+	char *track;
+	char *year;
+	void *image;
+	int   image_size;
+	int   image_type;
+	int   encoding;
+	int   version;
+} id3;
+</PRE>
+		
+		<BLOCKQUOTE>
+			The following functions are defined:
+		</BLOCKQUOTE>
+		
+<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">
+int  <A HREF="id3_read.htm">id3_read</A>(const char *file_name, id3 *info, int flags);
+void <A HREF="id3_free.htm">id3_free</A>(id3 info);
+</PRE>
+		
+		<HR SIZE=1 NOSHADE>
+	
+		<CENTER>
+			<BLOCKQUOTE>
+				Copyright © 2010 Aaron Clovsky
+			</BLOCKQUOTE>
+		</CENTER>
+	
+	</BODY>
+</HTML>

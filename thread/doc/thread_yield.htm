@@ -1,0 +1,96 @@
+
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			thread_yield - Yield current time slice to next available thread
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "<A HREF="thread_h.htm">thread.h</A>"</CODE></PRE>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">int thread_yield(void);</PRE>
+
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>thread_yield()</i> function causes the current thread to relinquish its time slice and allow the next runnable thread to execute.
+			<BR>
+			Note that if there is no other runnable thread <i>thread_yield()</i> may return immediately.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;RETURN VALUE</H4>
+		
+		<BLOCKQUOTE>
+			None
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;ERRORS</H4>
+		
+		<BLOCKQUOTE>
+			No errors are handled.
+		</BLOCKQUOTE>
+
+		<H4>&nbsp;EXAMPLES</H4>
+	
+<DIV STYLE="margin-left: 0.39in; margin-bottom: 0.2in">
+<PRE>
+void main(void)
+{
+	thread_handle handle;
+	
+	thread_create(thread_1, NULL, &amp;handle);
+	thread_create(thread_2, NULL, NULL);
+	
+	thread_join(handle, NULL);
+}
+
+void *thread_1(void *p)
+{
+	int i;
+	
+	for (i = 0; i &lt; 1000; i++)
+	{
+		printf("Busy loops that yield don't slow multi-threaded programs down.");
+	}
+}
+
+void *thread_2(void *p)
+{
+	while (1)
+	{
+		thread_yield();
+	}
+	
+}
+</PRE>
+</DIV>
+
+		<HR SIZE=1 NOSHADE>
+		
+		<CENTER>
+			<BLOCKQUOTE>
+				Copyright © 2010 Aaron Clovsky
+			</BLOCKQUOTE>
+		</CENTER>
+	
+	</BODY>
+</HTML>

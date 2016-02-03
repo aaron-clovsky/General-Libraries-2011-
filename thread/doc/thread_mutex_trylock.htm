@@ -1,0 +1,121 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			thread_mutex_trylock - Attempt to lock a mutex
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "<A HREF="thread_h.htm">thread.h</A>"</CODE></PRE>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">int thread_mutex_trylock(thread_mutex *mutex);</PRE>
+
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>thread_mutex_trylock()</i> function attempts to lock a mutex pointed to by the <i>mutex</i> argument, if the mutex is locked the function returns immediately with a value of THREAD_ERROR_INITIALIZATION_ERROR.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>mutex</i> argument must point to a <b>thread_mutex</b> type variable which has been initialized to THREAD_MUTEX_INITIALIZER prior to calling <i>thread_mutex_trylock()</i>.
+			<P>
+			If the mutex is successfully locked then it must be unlocked with a call to <A HREF="thread_mutex_unlock.htm">thread_mutex_unlock()</A>.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;RETURN VALUE</H4>
+		
+		<BLOCKQUOTE>
+			Upon successful completion the function returns zero.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;ERRORS</H4>
+		
+		<BLOCKQUOTE>
+			In case of an error one of the following values will be returned:
+		</BLOCKQUOTE>
+		
+		<DL>
+			<DL>
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[THREAD_ERROR_NULL_POINTER_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The <i>mutex</i> argument is NULL.
+					</DT>
+				
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[THREAD_ERROR_INITIALIZATION_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						Could not obtain mutex lock.
+					</DT>
+				
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[THREAD_ERROR_SYSTEM_CALL_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						A call to an operating system function failed.
+					</DT>
+				</BLOCKQUOTE>
+			</DL>
+	
+		</DL>
+		
+		<H4>&nbsp;EXAMPLES</H4>
+		
+<DIV STYLE="margin-left: 0.39in; margin-bottom: 0.2in">
+<PRE>
+thread_mutex mutex = THREAD_MUTEX_INITIALIZER;
+
+void main(void)
+{	
+	thread_handle handle[3];
+	
+	thread_create(thread, NULL, &amp;handle[0]);
+	thread_create(thread, NULL, &amp;handle[1]);
+	thread_create(thread, NULL, &amp;handle[2]);
+	
+	thread_join(handle[0], NULL);
+	thread_join(handle[1], NULL);
+	thread_join(handle[2], NULL);
+}
+
+void *thread(void *p)
+{
+	while (thread_mutex_trylock(&amp;mutex))
+	{
+		printf("Printing this to the screen while waiting for mutex lock").
+	}
+	
+	printf("Only one thread may execute this code at a time\n");
+	
+	thread_mutex_unlock(&amp;mutex);
+}
+
+
+</PRE>
+</DIV>
+
+		<HR SIZE=1 NOSHADE>
+		
+		<CENTER>
+			<BLOCKQUOTE>
+				Copyright © 2010 Aaron Clovsky
+			</BLOCKQUOTE>
+		</CENTER>
+		
+	</BODY>
+</HTML>

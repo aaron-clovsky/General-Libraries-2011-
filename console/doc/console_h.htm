@@ -1,0 +1,67 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			console.h - Console manipulation library
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "console.h"</CODE></PRE>
+		
+		<H4>COMPATIBILITY</H4>
+		
+		<BLOCKQUOTE>Win32/ANSI compatible (UNIX) console</BLOCKQUOTE>
+		
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>console.h</i> header file provides console cursor and text style control functions.
+			<br>
+			The following functions are defined:
+		</BLOCKQUOTE>
+		
+<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">
+void <A HREF="console_clear.htm">console_clear</A>(void);
+void <A HREF="console_cursor_goto.htm">console_cursor_goto</A>(unsigned int x, unsigned int y);
+void <A HREF="console_cursor_move.htm">console_cursor_move</A>(int x, int y);
+void <A HREF="console_style.htm">console_style</A>(int style);
+</PRE>
+
+		<H4>NOTES</H4>
+		
+		The top left character displayed in the console is considered to be position (1, 1).
+		<P>
+		The behavior of this library in a threaded environment differs between operating systems and compilers.
+		<BR>
+		Under UNIX environments if the compiler uses a thread-safe implementation of printf() then this library is thread-safe.
+		<BR>
+		Under WIN32 this library is NOT thread-safe, to mitigate issues which may occur in this situation only manipulate the console style and cursor from a single thread.
+		
+		<HR SIZE=1 NOSHADE>
+	
+		<CENTER>
+			<BLOCKQUOTE>
+				Copyright © 2010 Aaron Clovsky
+			</BLOCKQUOTE>
+		</CENTER>
+	
+	</BODY>
+</HTML>

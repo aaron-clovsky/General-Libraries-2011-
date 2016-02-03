@@ -1,0 +1,116 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			xml_data_tag - Insert an XML tag with CDATA content
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "<A HREF="xml_h.htm">xml.h</A>"</CODE></PRE>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">int xml_data_tag(xml *document, const char *tag, const char *content, ...);</PRE>
+		
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>xml_data_tag()</i> function inserts a tag in an XML element (ie &lt;tag&gt;&lt;/tag&gt;).
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>document</i> argument specifies the <b>xml</b> structure to append the tag to.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>tag</i> argument specifies the tag name to use. In addition to the tag name the attributes of the tag may be defined
+			as well. Each attribute name will follow the tag name preceded by an '&amp;' character.
+			<br>
+			For example "tag&amp;attribute" would produce &lt;tag attribute=""&gt; the value of attribute
+			would be set by the extended argument following <i>content</i>. Each ampersand in the <i>tag</i> argument implies a character
+			pointer argument after the <i>content</i> argument. Up to 256 attributes may be added to the tag.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>content</i> argument specifies the content of the tag to be inserted (ie &lt;tag&gt;<i>content</i>&lt;/tag&gt;).
+			A CDATA region is placed around the content of the tag. This allows nearly any data including
+			the '&lt;' and '&gt;' characters to be present in the contents of the tag, with the exception of the character sequence ']]&gt;'.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;RETURN VALUE</H4>
+		
+		<BLOCKQUOTE>
+			Upon successful completion the function returns zero.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;ERRORS</H4>
+		
+		<BLOCKQUOTE>
+			In case of an error one of the following values will be returned:
+		</BLOCKQUOTE>
+		
+		<DL>
+			<DL>
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[XML_ERROR_NULL_POINTER_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The <i>document</i>, <i>tag</i>, <i>content</i> or at least one extended argument is NULL.
+					</DT>
+				</BLOCKQUOTE>
+				
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[XML_ERROR_INITIALIZATION_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The <b>xml</b> structure has not been initalized with the
+						<A HREF="xml_create.htm">xml_create()</A>, <A HREF="xml_read.htm">xml_read()</A> or <A HREF="xml_import.htm">xml_import()</A> functions.
+					</DT>
+				</BLOCKQUOTE>
+				
+				<BLOCKQUOTE>	
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[XML_ERROR_MALLOC_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						A call to malloc() has failed due to insufficient memory.
+					</DT>
+				</BLOCKQUOTE>
+			</DL>
+	
+		</DL>
+		
+		<H4>&nbsp;EXAMPLES</H4>
+		
+<DIV STYLE="margin-left: 0.39in; margin-bottom: 0.2in">
+<PRE>
+xml document;
+
+xml_create(&amp;document);
+
+xml_data_tag(&amp;document, "tag&amp;attributeOne&amp;attributeTwo", "content", "value", "another value");
+</PRE>
+</DIV>
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<CENTER>
+			<BLOCKQUOTE>
+				Copyright © 2010 Aaron Clovsky
+			</BLOCKQUOTE>
+		</CENTER>
+		
+	</BODY>
+</HTML>

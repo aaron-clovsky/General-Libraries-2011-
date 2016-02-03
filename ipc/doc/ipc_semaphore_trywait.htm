@@ -1,0 +1,177 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			ipc_semaphore_trywait - Try to decrement a named semaphore
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "<A HREF="ipc_h.htm">ipc.h</A>"</CODE></PRE>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">int ipc_semaphore_trywait(ipc_semaphore *semaphore);</PRE>
+		
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>ipc_semaphore_trywait()</i> function attempts to decrement a named semaphore specified by the <i>semaphore</i> argument, if the semaphore can not be decremented the function returns immediately with a value of IPC_ERROR_INITIALIZATION_ERROR.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The <i>semaphore</i> argument must point to an <b>ipc_semaphore</b> type variable which has been initialized by a previous call to <A HREF="ipc_semaphore_create.htm">ipc_semaphore_create()</A> or <A HREF="ipc_semaphore_open.htm">ipc_semaphore_open()</A>.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;RETURN VALUE</H4>
+		
+		<BLOCKQUOTE>
+			Upon successful completion the function returns zero.
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;ERRORS</H4>
+		
+		<BLOCKQUOTE>
+			In case of an error one of the following values will be returned:
+		</BLOCKQUOTE>
+		
+		<DL>
+			<DL>
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[IPC_ERROR_NULL_POINTER_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The <i>semaphore</i> argument is NULL.
+					</DT>
+				</BLOCKQUOTE>
+				
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[IPC_ERROR_INITIALIZATION_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						The semaphore could not be decremented.
+					</DT>
+				</BLOCKQUOTE>
+				
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[IPC_ERROR_SYSTEM_CALL_ERROR]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						A call to an operating system function failed.
+					</DT>
+				</BLOCKQUOTE>
+			</DL>
+		</DL>
+		
+		<H4>&nbsp;EXAMPLES</H4>
+		
+<DIV STYLE="margin-left: 0.39in; margin-bottom: 0.2in">
+<PRE>
+/*Process 1*/
+ipc_semaphore semaphore;
+
+int main(void)
+{
+	int error;
+	
+	error = ipc_semaphore_create("my_semaphore", 0, &semaphore);
+	
+	if (error)
+	{
+		if (error == IPC_ERROR_INITIALIZATION_ERROR)
+		{
+			printf("The semaphore already exists!\n");
+		}
+		else
+		{
+			printf("An error occurred!\n");
+		}
+		
+		exit(0);
+	}
+	
+	//Wait for process 2 to increment the semaphore
+	//Print a message until process 2 releases the semaphore
+	while(1)
+	{
+		error = ipc_semaphore_trywait(&semaphore, 1000);
+		
+		if (error)
+		{
+			if (error == IPC_ERROR_INITIALIZATION_ERROR)
+			{
+				printf("The semaphore is not yet available!\n");
+			}
+			else
+			{
+				printf("An error occurred!\n");
+				
+				exit(0);
+			}
+		}
+		else
+		{
+			break;
+		}
+	}
+	
+	ipc_semaphore_close(&semaphore);
+	
+	return 0;
+}
+
+/*Process 2*/
+ipc_semaphore semaphore;
+
+int main(void)
+{
+	int error;
+	
+	error = ipc_semaphore_open("my_semaphore", &semaphore);
+	
+	if (error)
+	{
+		if (error == IPC_ERROR_INITIALIZATION_ERROR)
+		{
+			printf("The semaphore does not exist!\n");
+		}
+		else
+		{
+			printf("An error occurred!\n");
+		}
+		
+		exit(0);
+	}
+	
+	//Increment the semaphore allowing process 1 to complete
+	ipc_semaphore_post(&semaphore);
+	
+	ipc_semaphore_close(&semaphore);
+	
+	return 0;
+}
+</PRE>
+</DIV>
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<CENTER>
+			<BLOCKQUOTE>
+				Copyright © 2010 Aaron Clovsky
+			</BLOCKQUOTE>
+		</CENTER>
+		
+	</BODY>
+</HTML>

@@ -1,0 +1,134 @@
+<HTML>
+	<HEAD>
+		<STYLE TYPE="text/css">
+		<!--
+			PRE.cjk { font-family: "DejaVu Sans", monospace }
+			CODE.cjk { font-family: "DejaVu Sans", monospace }
+			a:link { color: #0000FF; }
+			a:visited { color: #0000FF; }
+			a:hover { color: #0000FF; }
+			a:active{ color: #0000FF; }
+		-->
+		</STYLE>
+	</HEAD>
+	
+	<BODY BGCOLOR="#ffffff">
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<H4>&nbsp;NAME</H4>
+		
+		<BLOCKQUOTE>
+			ipc.h - WIN32/64 and POSIX compatible inter-process communication library
+		</BLOCKQUOTE>
+		
+		<H4>&nbsp;SYNOPSIS</H4>
+		
+		<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in"><CODE CLASS="western">#include "ipc.h"</CODE></PRE>
+		
+		<H4>COMPATIBILITY</H4>
+		
+		<BLOCKQUOTE>WIN32 NT5, POSIX.2001</BLOCKQUOTE>
+		
+		<H4>&nbsp;DESCRIPTION</H4>
+		
+		<BLOCKQUOTE>
+			The <i>ipc.h</i> header file provides cross-platform inter-process communication functionality.
+			<br>
+			This library is intended to provide essential IPC functionality identically across platforms.
+			<br>
+			The following functionality is provided: Single Instance Application, Synchronization, Client-Server Messaging, Shared Memory
+			<br>
+			This header defines the following types: <b>ipc_instance</b>, <b>ipc_semaphore</b>, <b>ipc_shm</b>, <b>ipc_channel_server</b>, <b>ipc_channel_client</b> and <b>ipc_channel_server_client</b>.
+		</BLOCKQUOTE>
+		
+		<BLOCKQUOTE>
+			The following functions are defined:
+		</BLOCKQUOTE>
+		
+<PRE CLASS="western" STYLE="margin-left: 0.39in; margin-right: 0.39in">
+int  <A HREF="ipc_instance_create.htm">ipc_instance_create</A>(const char *name, ipc_instance *instance);
+int  <A HREF="ipc_instance_check.htm">ipc_instance_check</A>(const char *name);
+void <A HREF="ipc_instance_destroy.htm">ipc_instance_destroy</A>(ipc_instance *instance);
+int  <A HREF="ipc_channel_create.htm">ipc_channel_create</A>(const char *name, unsigned int size, ipc_channel_server *channel);
+int  <A HREF="ipc_channel_open.htm">ipc_channel_open</A>(const char *name, ipc_channel_client *channel, unsigned int *size);
+int  <A HREF="ipc_channel_send.htm">ipc_channel_send</A>(ipc_channel_client *channel, void *data, unsigned int size);
+int  <A HREF="ipc_channel_receive.htm">ipc_channel_receive</A>(ipc_channel_server *channel, void *buffer, unsigned int *size, ipc_channel_server_client *client);
+int  <A HREF="ipc_channel_client_type.htm">ipc_channel_client_type</A>(ipc_channel_server_client client);
+int  <A HREF="ipc_channel_send_and_receive.htm">ipc_channel_send_and_receive</A>(ipc_channel_client *channel, void *out_data, unsigned int out_size, void *in_data, unsigned int *in_size);
+int  <A HREF="ipc_channel_respond.htm">ipc_channel_respond</A>(ipc_channel_server *channel, ipc_channel_server_client client, void *data, unsigned int size);
+void <A HREF="ipc_channel_close.htm">ipc_channel_close</A>(ipc_channel_client *channel);
+void <A HREF="ipc_channel_destroy.htm">ipc_channel_destroy</A>(ipc_channel_server *channel);
+int  <A HREF="ipc_shm_create.htm">ipc_shm_create</A>(ipc_shm *shm, const char *name, unsigned int size, void **addr);
+int  <A HREF="ipc_shm_open.htm">ipc_shm_open</A>(const char *name, void **addr, unsigned int *size);
+void <A HREF="ipc_shm_close.htm">ipc_shm_close</A>(void *addr);
+void <A HREF="ipc_shm_destroy.htm">ipc_shm_destroy</A>(ipc_shm *shm);
+int  <A HREF="ipc_semaphore_create.htm">ipc_semaphore_create</A>(const char *name, unsigned int initial_value, ipc_semaphore *semaphore);
+int  <A HREF="ipc_semaphore_open.htm">ipc_semaphore_open</A>(const char *name, ipc_semaphore *semaphore);
+int  <A HREF="ipc_semaphore_wait.htm">ipc_semaphore_wait</A>(ipc_semaphore *semaphore);
+int  <A HREF="ipc_semaphore_trywait.htm">ipc_semaphore_trywait</A>(ipc_semaphore *semaphore);
+int  <A HREF="ipc_semaphore_timedwait.htm">ipc_semaphore_timedwait</A>(ipc_semaphore *semaphore, int milliseconds);
+int  <A HREF="ipc_semaphore_post.htm">ipc_semaphore_post</A>(ipc_semaphore *semaphore);
+void <A HREF="ipc_semaphore_close.htm">ipc_semaphore_close</A>(ipc_semaphore *semaphore);
+
+</PRE>
+		<H4>COMPILE TIME OPTIONS</H4>
+		
+		The following symbols are used by this library and may be defined or overridden at compile time:
+		
+		<DL>
+			<DL>
+				<BLOCKQUOTE>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[IPC_NAME_MAX_LENGTH]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						Default Value: <b>1023</B>
+						<P>
+						The maximum length for names passed to ipc_instance_*, ipc_channel_*, ipc_shm_* and ipc_semaphore_* functions.
+					</DT>
+					
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[IPC_POLLING_INTERVAL]</DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						Default Value: <b>100</B>
+						<BR>
+						This value represents a number of milliseconds.
+						<P>
+						While waiting to connect to an IPC channel server, or waiting for a response from an IPC channel server, the PID
+						of the server process is periodically checked in ipc_channel_* functions to ensure that the server is still running to prevent
+						a deadlock scenario. The time between checks is specified by this value.
+					</DT>
+					
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">[IPC_MAX_SIMULTANEOUS_CLIENTS] <b>(POSIX only)</b></DT>
+					<DT STYLE="margin-right: 0.39in; margin-bottom: 0.2in">
+						Default Value: <b>45</B>
+						<P>
+						The maximum number of simultaneous full duplex (<A HREF="ipc_channel_send_and_receive.htm">ipc_channel_send_and_receive()</A>)
+						clients which may connect to an IPC channel server (<A HREF="ipc_channel_receive.htm">ipc_channel_receive()</A>).
+					</DT>
+				</BLOCKQUOTE>
+			</DL>
+		</DL>
+		
+		<H4>NOTES</H4>
+		
+		This library is designed to be thread safe. For cross platform multi-threading support use <A HREF="../../thread/doc/thread_h.htm">thread.h</A>.
+		<P>
+		<u>POSIX</u>
+		<BR>
+		This module may need to be linked to the real time library ('-lrt' compiler/linker option) in order to compile.
+		<P>
+		The ipc_channel_* and ipc_semaphore_* functions do not handle the E_INTR errno value while waiting for a semaphore,
+		<BR>
+		if these functions are interrupted by a signal they will return IPC_ERROR_SYSTEM_CALL_ERROR.
+		<P>
+		The <A HREF="ipc_semaphore_timedwait.htm">ipc_semaphore_timedwait()</A> function will only be available if 
+		the compiler reports _POSIX_C_SOURCE >= 200112L OR _XOPEN_SOURCE >= 600.
+		
+		<HR SIZE=1 NOSHADE>
+		
+		<CENTER>
+			<BLOCKQUOTE>
+				Copyright © 2010 Aaron Clovsky
+			</BLOCKQUOTE>
+		</CENTER>
+	</BODY>
+</HTML>
